@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Fourmiliere"
         mc:Ignorable="d"
-        Title="{Binding TitreApplication}" Height="350" Width="525">
+        Title="{Binding TitreApplication}" Height="600" Width="800">
 
     <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
@@ -48,7 +48,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image Source="fourmi.png" Width="30" />
+                        <Image Source="../Assets/images/fourmi.png" Width="30" />
                         <TextBlock Grid.Column="1"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
@@ -68,7 +68,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Image Grid.Row="3" Grid.Column="2" Grid.RowSpan="2"
-               Source="fourmi.png"/>
+               Source="../Assets/images/fourmi.png"/>
         <Button Name="AjouteFourmi"
                 Grid.Row="3" Grid.Column="0"
                 Content="Ajouter Fourmi" FontSize="16"

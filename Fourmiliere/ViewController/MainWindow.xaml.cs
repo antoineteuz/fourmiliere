@@ -93,7 +93,7 @@ namespace Fourmiliere
 
             foreach (var fourmi in App.FourmiliereViewModel.FourmisList)
             {
-                Uri uri = new Uri("fourmi.png", UriKind.Relative);
+                Uri uri = new Uri("../Assets/images/fourmi.png", UriKind.Relative);
                 Image img = new Image();
                 img.Source = new BitmapImage(uri);
                 
