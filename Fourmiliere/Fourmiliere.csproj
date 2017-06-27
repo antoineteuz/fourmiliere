@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\Nourriture.cs" />
     <Compile Include="Model\QartierGénéral.cs" />
     <Compile Include="ViewModel\AProposViewModel.cs" />
@@ -61,7 +62,7 @@
       <DependentUpon>AProposWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Etape.cs" />
-    <Compile Include="ViewModelBase.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="ViewController\AProposWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

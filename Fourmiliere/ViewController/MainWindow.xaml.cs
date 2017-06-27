@@ -91,12 +91,12 @@ namespace Fourmiliere
             Image img = new Image();
             img.Source = new BitmapImage(uri);
 
-            Grid.SetColumn(img, App.QuartierGénéral.X);
-            Grid.SetRow(img, App.QuartierGénéral.Y);
+            Grid.SetColumn(img, App.FourmiliereViewModel.QG.X);
+            Grid.SetRow(img, App.FourmiliereViewModel.QG.Y);
             Plateau.Children.Add(img);
 
             // On dessine les fourmis
-            foreach (var fourmi in App.FourmiliereViewModel.FourmisList)
+            foreach (var fourmi in App.FourmiliereViewModel.QG.FourmisList)
             {
                 uri = new Uri("../Assets/images/fourmi.png", UriKind.Relative);
                 img = new Image();
