@@ -104,6 +104,7 @@ namespace Fourmiliere
 
                 Grid.SetColumn(img, fourmi.X);
                 Grid.SetRow(img, fourmi.Y);
+                
                 Plateau.Children.Add(img);
             }
 
@@ -113,8 +114,8 @@ namespace Fourmiliere
                 img = new Image();
                 img.Source = new BitmapImage(uri);
 
-                Grid.SetColumn(img, nourriture.X);
-                Grid.SetRow(img, nourriture.Y);
+                Grid.SetColumn(img, nourriture.Y);
+                Grid.SetRow(img, nourriture.X);
                 Plateau.Children.Add(img);
             }
             

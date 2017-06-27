@@ -18,6 +18,7 @@ namespace Fourmiliere
         
         public ObservableCollection<Nourriture> nourrituresList;
         private Fourmi fourmiSelect;
+        private bool testAjout = true;
 
         public QuartierGénéral QG { get; set; }
 
@@ -70,7 +71,19 @@ namespace Fourmiliere
 
         public void AjouteNourriture(int x, int y)
         {
-            NourrituresList.Add(new Nourriture(x, y));
+            foreach (var fourmi in QG.FourmisList)
+            {
+                if (fourmi.X == y && fourmi.Y == x)
+                {
+                    testAjout = false;
+                } else
+                {
+                    testAjout = testAjout && true;
+                }
+            }
+
+            if (testAjout)
+                NourrituresList.Add(new Nourriture(x, y)); 
         }
 
         public void SupprimeFourmi()
