@@ -54,13 +54,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\Nourriture.cs" />
+    <Compile Include="Model\QartierGénéral.cs" />
     <Compile Include="ViewModel\AProposViewModel.cs" />
     <Compile Include="ViewController\AProposWindow.xaml.cs">
       <DependentUpon>AProposWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Etape.cs" />
-    <Compile Include="ViewModelBase.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="ViewController\AProposWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,6 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\images\olive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\images\qg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

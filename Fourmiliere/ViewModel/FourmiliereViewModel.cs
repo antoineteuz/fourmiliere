@@ -12,11 +12,15 @@ namespace Fourmiliere
 
         public int DimensionX { get; set; }
         public int DimensionY { get; set; }
+
         private string titreApplication;
-        public ObservableCollection<Fourmi> fourmisList;
+        
+        
         public ObservableCollection<Nourriture> nourrituresList;
         private Fourmi fourmiSelect;
         private bool testAjout = true;
+
+        public QuartierGénéral QG { get; set; }
 
         public string TitreApplication {
             get { return titreApplication; }
@@ -24,16 +28,6 @@ namespace Fourmiliere
             {
                 titreApplication = value;
                 OnPropertyChanged("TitreApplication");
-            }
-        }
-
-        public ObservableCollection<Fourmi> FourmisList
-        {
-            get { return fourmisList; }
-            set
-            {
-                fourmisList = value;
-                OnPropertyChanged("FourmisList");
             }
         }
 
@@ -60,22 +54,24 @@ namespace Fourmiliere
         {
             TitreApplication = "Fourmilière";
 
-            FourmisList = new ObservableCollection<Fourmi>();
+
             NourrituresList = new ObservableCollection<Nourriture>();
 
             DimensionX = 10;
             DimensionY = 20;
             VitesseExecution = 500;
+            
+            QG = new QuartierGénéral(DimensionX, DimensionY);
         }
 
         public void AjouteFourmi()
         {
-            FourmisList.Add(new Fourmi("Fourmi N°" + FourmisList.Count, Hazard.Next(10), Hazard.Next(10)));
+            QG.ProduireFourmi("Fourmi N°" + QG.FourmisList.Count);
         }
 
         public void AjouteNourriture(int x, int y)
         {
-            foreach (var fourmi in FourmisList)
+            foreach (var fourmi in QG.FourmisList)
             {
                 if (fourmi.X == y && fourmi.Y == x)
                 {
@@ -92,12 +88,12 @@ namespace Fourmiliere
 
         public void SupprimeFourmi()
         {
-            FourmisList.Remove(FourmiSelect);
+            QG.FourmisList.Remove(FourmiSelect);
         }
 
         internal void TourSuivant()
         {
-            foreach (var uneFourmi in FourmisList)
+            foreach (var uneFourmi in QG.FourmisList)
             {
                 uneFourmi.Avance1Tour(DimensionX, DimensionY);
             }
