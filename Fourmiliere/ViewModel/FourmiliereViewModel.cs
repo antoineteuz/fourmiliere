@@ -16,6 +16,7 @@ namespace Fourmiliere
         public ObservableCollection<Fourmi> fourmisList;
         public ObservableCollection<Nourriture> nourrituresList;
         private Fourmi fourmiSelect;
+        private bool testAjout = true;
 
         public string TitreApplication {
             get { return titreApplication; }
@@ -74,7 +75,19 @@ namespace Fourmiliere
 
         public void AjouteNourriture(int x, int y)
         {
-            NourrituresList.Add(new Nourriture(x, y));
+            foreach (var fourmi in FourmisList)
+            {
+                if (fourmi.X == y && fourmi.Y == x)
+                {
+                    testAjout = false;
+                } else
+                {
+                    testAjout = testAjout && true;
+                }
+            }
+
+            if (testAjout)
+                NourrituresList.Add(new Nourriture(x, y)); 
         }
 
         public void SupprimeFourmi()
