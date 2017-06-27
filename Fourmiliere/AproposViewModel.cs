@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fourmiliere
 {
-    public class AproposViewModel : ViewModelBase
+    public class AProposViewModel: ViewModelBase
     {
-        public string Copyright
-        {
+        public string Copyright {
             get { return "Metagenia"; }
         }
 
@@ -18,10 +13,7 @@ namespace Fourmiliere
             get { return DateTime.Now.ToString(); }
         }
 
-        public string Auteur
-        {
-            get { return "Antoine PELLETIER\nJean-Christophe MELIKIAN"; }
-        }
-        
+        public string Auteurs
+        { get { return "Antoine PELLETIER\nJean-Christophe MELIKIAN"; } }
     }
 }

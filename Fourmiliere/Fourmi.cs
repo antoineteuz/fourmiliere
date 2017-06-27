@@ -1,27 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Fourmiliere
 {
+
     public class Fourmi
     {
-        private static readonly Random Hazard = new Random();
+
+        static Random Hazard = new Random();
 
         public string Nom { get; set; }
 
-        public int X { get; set; }
+        public int X { get; set;  }
 
-        public int Y { get; set; }
+        public int Y { get; set;  }
 
         public ObservableCollection<Etape> EtapesList { get; set; }
 
-        public Fourmi (string unNom, int maxDimX, int maxDimY)
+        public Fourmi(string Nom, int maxDimX, int maxDimY)
         {
-            Nom = unNom;
+            this.Nom = Nom;
             X = maxDimX;
             Y = maxDimY;
 
             EtapesList = new ObservableCollection<Etape>();
+
             for (int i = 0, max = Hazard.Next(10); i < max; i++)
             {
                 EtapesList.Add(new Etape());
@@ -30,7 +37,7 @@ namespace Fourmiliere
 
         public override string ToString()
         {
-            return "(Brouillon) " + Nom;
+            return "(Brouillon)" + Nom;
         }
 
         internal void Avance1Tour(int dimensionX, int dimensionY)

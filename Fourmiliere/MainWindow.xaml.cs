@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -29,6 +22,7 @@ namespace Fourmiliere
         public MainWindow()
         {
             InitializeComponent();
+            
             DataContext = App.FourmiliereViewModel;
 
             //Rafraichissement du plateau
@@ -46,6 +40,7 @@ namespace Fourmiliere
             }
         }
 
+        // TODO: Optimiser le redessinage
         private void Redessine()
         {
             DessinePlateau();
@@ -53,35 +48,16 @@ namespace Fourmiliere
 
         private void AddUIToGrid(Grid uneGrille, UIElement unUiElement)
         {
-            
-        }
 
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            App.FourmiliereViewModel.AjouteFourmi();
-            Redessine();
-        }
-
-        private void BtnSupp_Click(object sender, RoutedEventArgs e)
-        {
-            App.FourmiliereViewModel.SupprimerFourmi();
-        }
-
-        private void BtnAproposWindow_Click(object sender, RoutedEventArgs e)
-        {
-            AproposWindow aproposWindow = new AproposWindow();
-            aproposWindow.Show();
-            this.Close();
         }
 
         private void DessinePlateau()
         {
-            
             Plateau.ColumnDefinitions.Clear();
             Plateau.RowDefinitions.Clear();
             Plateau.Children.Clear();
 
-            for (int i = 0; i < App.FourmiliereViewModel.DimensionX; i ++)
+            for (int i = 0; i < App.FourmiliereViewModel.DimensionX; i++)
             {
                 Plateau.ColumnDefinitions.Add(new ColumnDefinition());
             }
@@ -90,14 +66,72 @@ namespace Fourmiliere
                 Plateau.RowDefinitions.Add(new RowDefinition());
             }
 
+            for (int i = 0; i < 7; i++)
+            {
+                Ellipse pheromone = new Ellipse();
+                pheromone.Fill = new SolidColorBrush(Colors.BlueViolet);
+
+                Grid.SetColumn(pheromone, 4);
+                Grid.SetRow(pheromone, 4);
+                Plateau.Children.Add(pheromone);
+            }
+
+            for(int i = 0; i < App.FourmiliereViewModel.DimensionX; i++)
+            {
+                for (int j = 0; j < App.FourmiliereViewModel.DimensionY; j++)
+                {
+                    Button btn = new Button();
+                    btn.Background = new SolidColorBrush(Colors.Aqua);
+                    Plateau.Children.Add(btn);
+                    Grid.SetColumn(btn, i);
+                    Grid.SetRow(btn, j);
+                    btn.Click += BtnOnClick;
+                    btn.Tag = i + " " + j;
+                    btn.Margin = new Thickness(4);
+                }
+            }
+
             foreach (var fourmi in App.FourmiliereViewModel.FourmisList)
             {
+                Uri uri = new Uri("fourmi.png", UriKind.Relative);
                 Image img = new Image();
-                img.Source = new BitmapImage(new Uri("fourmi.png", UriKind.Relative));
-                Plateau.Children.Add(img);
+                img.Source = new BitmapImage(uri);
+                
                 Grid.SetColumn(img, fourmi.X);
                 Grid.SetRow(img, fourmi.Y);
+                Plateau.Children.Add(img);
             }
+
+        }
+
+        private void BtnOnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(((Button)sender).Tag.ToString());
+        }
+
+        private void AjouteFourmi_Click(object sender, RoutedEventArgs e)
+        {
+            App.FourmiliereViewModel.AjouteFourmi();
+            Redessine();
+        }
+
+        private void SupprimerFourmi_Click(object sender, RoutedEventArgs e)
+        {
+            App.FourmiliereViewModel.SupprimeFourmi();
+        }
+
+        private void ListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Delete)
+            {
+                App.FourmiliereViewModel.SupprimeFourmi();
+            }
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            Window APropos = new AProposWindow();
+            APropos.ShowDialog();
         }
 
         private void DessinePlateau(int x, int y)

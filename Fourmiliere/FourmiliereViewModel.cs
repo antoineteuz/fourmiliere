@@ -4,6 +4,7 @@ using System.Threading;
 
 namespace Fourmiliere
 {
+
     public class FourmiliereViewModel : ViewModelBase
     {
         static Random Hazard = new Random();
@@ -11,11 +12,10 @@ namespace Fourmiliere
         public int DimensionX { get; set; }
         public int DimensionY { get; set; }
         private string titreApplication;
-        private ObservableCollection<   Fourmi> fourmisList;
+        public ObservableCollection<Fourmi> fourmisList;
         private Fourmi fourmiSelect;
 
-        public string TitreApplication
-        {
+        public string TitreApplication {
             get { return titreApplication; }
             set
             {
@@ -26,16 +26,15 @@ namespace Fourmiliere
 
         public ObservableCollection<Fourmi> FourmisList
         {
-            get { return fourmisList; }
+            get { return fourmisList;  }
             set
             {
                 fourmisList = value;
                 OnPropertyChanged("FourmisList");
             }
         }
-
-        public Fourmi FourmiSelect
-        {
+        
+        public Fourmi FourmiSelect {
             get { return fourmiSelect; }
             set
             {
@@ -44,9 +43,9 @@ namespace Fourmiliere
             }
         }
 
-        public FourmiliereViewModel()
+        public FourmiliereViewModel ()
         {
-            TitreApplication = "Application Fourmilière";
+            TitreApplication = "Fourmilière";
 
             FourmisList = new ObservableCollection<Fourmi>();
 
@@ -56,7 +55,7 @@ namespace Fourmiliere
             FourmisList.Add(new Fourmi("FOURMI BOBINO", 4, 1));
 
             DimensionX = 10;
-            DimensionY = 10;
+            DimensionY = 20;
             VitesseExecution = 500;
         }
 
@@ -65,9 +64,9 @@ namespace Fourmiliere
             FourmisList.Add(new Fourmi("Fourmi N°" + FourmisList.Count, Hazard.Next(10), Hazard.Next(10)));
         }
 
-        public void SupprimerFourmi()
+        public void SupprimeFourmi()
         {
-            FourmisList.Remove(fourmiSelect);
+            FourmisList.Remove(FourmiSelect);
         }
 
         internal void TourSuivant()

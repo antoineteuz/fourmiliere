@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:Fourmiliere"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="{x:Type Button}" x:Key="MonStyleDePolice">
+            
+        </Style>
     </Application.Resources>
 </Application>
