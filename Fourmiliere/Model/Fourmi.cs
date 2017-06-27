@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fourmiliere
+namespace Fourmiliere.Model
 {
 
     public class Fourmi
     {
 
-        static Random Hazard = new Random();
+        static Random Hasard = new Random();
 
         public string Nom { get; set; }
 
@@ -21,6 +21,13 @@ namespace Fourmiliere
 
         public ObservableCollection<Etape> EtapesList { get; set; }
 
+        private int décalageX;
+        private int décalageY;
+        private int newX;
+        private int newY;
+        private int previousX;
+        private int previousY;
+
         public Fourmi(string Nom, int maxDimX, int maxDimY)
         {
             this.Nom = Nom;
@@ -29,7 +36,7 @@ namespace Fourmiliere
 
             EtapesList = new ObservableCollection<Etape>();
 
-            for (int i = 0, max = Hazard.Next(10); i < max; i++)
+            for (int i = 0, max = Hasard.Next(10); i < max; i++)
             {
                 EtapesList.Add(new Etape());
             }
@@ -48,8 +55,19 @@ namespace Fourmiliere
 
         private void AvanceAuHasard(int dimensionX, int dimensionY)
         {
-            int newX = Hazard.Next(3) - 1;
-            int newY = Hazard.Next(3) - 1;
+
+            do
+            {
+                décalageX = Hasard.Next(3) - 1;
+                décalageY = Hasard.Next(3) - 1;
+
+                newX = X + ((décalageX == 2) ? 1 : décalageX);
+                newY = Y + ((décalageY == 2) ? 1 : décalageY);
+            } while (newX == previousX && newY == previousY);
+
+            previousX = X;
+            previousY = Y;
+
             if ((newX >= 0) && (newX < dimensionX)) X = newX;
             if ((newY >= 0) && (newY < dimensionY)) Y = newY;
 

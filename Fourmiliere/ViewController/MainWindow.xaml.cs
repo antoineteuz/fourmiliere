@@ -46,11 +46,6 @@ namespace Fourmiliere
             DessinePlateau();
         }
 
-        private void AddUIToGrid(Grid uneGrille, UIElement unUiElement)
-        {
-
-        }
-
         private void DessinePlateau()
         {
             Plateau.ColumnDefinitions.Clear();
@@ -91,22 +86,49 @@ namespace Fourmiliere
                 }
             }
 
-            foreach (var fourmi in App.FourmiliereViewModel.FourmisList)
+            // On dessine la fourmilière
+            Uri uri = new Uri("../Assets/images/qg.png", UriKind.Relative);
+            Image img = new Image();
+            img.Source = new BitmapImage(uri);
+
+            Grid.SetColumn(img, App.FourmiliereViewModel.QG.X);
+            Grid.SetRow(img, App.FourmiliereViewModel.QG.Y);
+            Plateau.Children.Add(img);
+
+            // On dessine les fourmis
+            foreach (var fourmi in App.FourmiliereViewModel.QG.FourmisList)
             {
-                Uri uri = new Uri("../Assets/images/fourmi.png", UriKind.Relative);
-                Image img = new Image();
+                uri = new Uri("../Assets/images/fourmi.png", UriKind.Relative);
+                img = new Image();
                 img.Source = new BitmapImage(uri);
-                
+
                 Grid.SetColumn(img, fourmi.X);
                 Grid.SetRow(img, fourmi.Y);
+                
                 Plateau.Children.Add(img);
             }
+
+            foreach (var nourriture in App.FourmiliereViewModel.NourrituresList)
+            {
+                uri = new Uri("../Assets/images/olive.png", UriKind.Relative);
+                img = new Image();
+                img.Source = new BitmapImage(uri);
+
+                Grid.SetColumn(img, nourriture.Y);
+                Grid.SetRow(img, nourriture.X);
+                Plateau.Children.Add(img);
+            }
+            
 
         }
 
         private void BtnOnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(((Button)sender).Tag.ToString());
+            int row = Grid.GetRow((Button) sender);
+            int column = Grid.GetColumn((Button) sender);
+
+            App.FourmiliereViewModel.AjouteNourriture(row, column);
+            Redessine();
         }
 
         private void AjouteFourmi_Click(object sender, RoutedEventArgs e)
@@ -142,8 +164,6 @@ namespace Fourmiliere
         private void BtnTourSuivant_Click(object sender, RoutedEventArgs e)
         {
             App.FourmiliereViewModel.TourSuivant();
-            int x = App.FourmiliereViewModel.DimensionX;
-            int y = App.FourmiliereViewModel.DimensionY;
             Redessine();
         }
 

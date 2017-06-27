@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fourmiliere.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading;
 
@@ -11,9 +12,15 @@ namespace Fourmiliere
 
         public int DimensionX { get; set; }
         public int DimensionY { get; set; }
+
         private string titreApplication;
-        public ObservableCollection<Fourmi> fourmisList;
+        
+        
+        public ObservableCollection<Nourriture> nourrituresList;
         private Fourmi fourmiSelect;
+        private bool testAjout = true;
+
+        public QuartierGénéral QG { get; set; }
 
         public string TitreApplication {
             get { return titreApplication; }
@@ -24,16 +31,16 @@ namespace Fourmiliere
             }
         }
 
-        public ObservableCollection<Fourmi> FourmisList
+        public ObservableCollection<Model.Nourriture> NourrituresList
         {
-            get { return fourmisList;  }
+            get { return nourrituresList; }
             set
             {
-                fourmisList = value;
-                OnPropertyChanged("FourmisList");
+                nourrituresList = value;
+                OnPropertyChanged("NourrituresList");
             }
         }
-        
+
         public Fourmi FourmiSelect {
             get { return fourmiSelect; }
             set
@@ -47,31 +54,46 @@ namespace Fourmiliere
         {
             TitreApplication = "Fourmilière";
 
-            FourmisList = new ObservableCollection<Fourmi>();
 
-            FourmisList.Add(new Fourmi("FOURMI TEUZO", 1, 1));
-            FourmisList.Add(new Fourmi("FOURMI ELIOTTI", 2, 1));
-            FourmisList.Add(new Fourmi("FOURMI DEHON", 3, 1));
-            FourmisList.Add(new Fourmi("FOURMI BOBINO", 4, 1));
+            NourrituresList = new ObservableCollection<Nourriture>();
 
             DimensionX = 10;
             DimensionY = 20;
             VitesseExecution = 500;
+            
+            QG = new QuartierGénéral(DimensionX, DimensionY);
         }
 
         public void AjouteFourmi()
         {
-            FourmisList.Add(new Fourmi("Fourmi N°" + FourmisList.Count, Hazard.Next(10), Hazard.Next(10)));
+            QG.ProduireFourmi("Fourmi N°" + QG.FourmisList.Count);
+        }
+
+        public void AjouteNourriture(int x, int y)
+        {
+            foreach (var fourmi in QG.FourmisList)
+            {
+                if (fourmi.X == y && fourmi.Y == x)
+                {
+                    testAjout = false;
+                } else
+                {
+                    testAjout = testAjout && true;
+                }
+            }
+
+            if (testAjout)
+                NourrituresList.Add(new Nourriture(x, y)); 
         }
 
         public void SupprimeFourmi()
         {
-            FourmisList.Remove(FourmiSelect);
+            QG.FourmisList.Remove(FourmiSelect);
         }
 
         internal void TourSuivant()
         {
-            foreach (var uneFourmi in FourmisList)
+            foreach (var uneFourmi in QG.FourmisList)
             {
                 uneFourmi.Avance1Tour(DimensionX, DimensionY);
             }
