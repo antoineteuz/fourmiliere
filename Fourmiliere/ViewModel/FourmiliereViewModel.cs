@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fourmiliere.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading;
 
@@ -13,6 +14,7 @@ namespace Fourmiliere
         public int DimensionY { get; set; }
         private string titreApplication;
         public ObservableCollection<Fourmi> fourmisList;
+        public ObservableCollection<Nourriture> nourrituresList;
         private Fourmi fourmiSelect;
 
         public string TitreApplication {
@@ -26,14 +28,24 @@ namespace Fourmiliere
 
         public ObservableCollection<Fourmi> FourmisList
         {
-            get { return fourmisList;  }
+            get { return fourmisList; }
             set
             {
                 fourmisList = value;
                 OnPropertyChanged("FourmisList");
             }
         }
-        
+
+        public ObservableCollection<Model.Nourriture> NourrituresList
+        {
+            get { return nourrituresList; }
+            set
+            {
+                nourrituresList = value;
+                OnPropertyChanged("NourrituresList");
+            }
+        }
+
         public Fourmi FourmiSelect {
             get { return fourmiSelect; }
             set
@@ -48,11 +60,7 @@ namespace Fourmiliere
             TitreApplication = "Fourmilière";
 
             FourmisList = new ObservableCollection<Fourmi>();
-
-            FourmisList.Add(new Fourmi("FOURMI TEUZO", 1, 1));
-            FourmisList.Add(new Fourmi("FOURMI ELIOTTI", 2, 1));
-            FourmisList.Add(new Fourmi("FOURMI DEHON", 3, 1));
-            FourmisList.Add(new Fourmi("FOURMI BOBINO", 4, 1));
+            NourrituresList = new ObservableCollection<Nourriture>();
 
             DimensionX = 10;
             DimensionY = 20;
@@ -62,6 +70,11 @@ namespace Fourmiliere
         public void AjouteFourmi()
         {
             FourmisList.Add(new Fourmi("Fourmi N°" + FourmisList.Count, Hazard.Next(10), Hazard.Next(10)));
+        }
+
+        public void AjouteNourriture(int x, int y)
+        {
+            NourrituresList.Add(new Nourriture(x, y));
         }
 
         public void SupprimeFourmi()

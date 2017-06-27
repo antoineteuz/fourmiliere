@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fourmiliere
+namespace Fourmiliere.Model
 {
 
     public class Fourmi

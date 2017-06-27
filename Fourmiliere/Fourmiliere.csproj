@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Nourriture.cs" />
     <Compile Include="ViewModel\AProposViewModel.cs" />
     <Compile Include="ViewController\AProposWindow.xaml.cs">
       <DependentUpon>AProposWindow.xaml</DependentUpon>
@@ -107,6 +108,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\images\fourmi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\images\groseille.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\images\olive.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

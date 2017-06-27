@@ -96,17 +96,33 @@ namespace Fourmiliere
                 Uri uri = new Uri("../Assets/images/fourmi.png", UriKind.Relative);
                 Image img = new Image();
                 img.Source = new BitmapImage(uri);
-                
+
                 Grid.SetColumn(img, fourmi.X);
                 Grid.SetRow(img, fourmi.Y);
                 Plateau.Children.Add(img);
             }
 
+            foreach (var nourriture in App.FourmiliereViewModel.NourrituresList)
+            {
+                Uri uri = new Uri("../Assets/images/olive.png", UriKind.Relative);
+                Image img = new Image();
+                img.Source = new BitmapImage(uri);
+
+                Grid.SetColumn(img, nourriture.X);
+                Grid.SetRow(img, nourriture.Y);
+                Plateau.Children.Add(img);
+            }
+            
+
         }
 
         private void BtnOnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(((Button)sender).Tag.ToString());
+            int row = Grid.GetRow((Button) sender);
+            int column = Grid.GetColumn((Button) sender);
+
+            App.FourmiliereViewModel.AjouteNourriture(row, column);
+            Redessine();
         }
 
         private void AjouteFourmi_Click(object sender, RoutedEventArgs e)
