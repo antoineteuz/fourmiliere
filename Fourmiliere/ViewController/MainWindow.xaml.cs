@@ -164,8 +164,6 @@ namespace Fourmiliere
         private void BtnTourSuivant_Click(object sender, RoutedEventArgs e)
         {
             App.FourmiliereViewModel.TourSuivant();
-            int x = App.FourmiliereViewModel.DimensionX;
-            int y = App.FourmiliereViewModel.DimensionY;
             Redessine();
         }
 
