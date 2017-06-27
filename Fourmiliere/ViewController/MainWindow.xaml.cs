@@ -46,11 +46,6 @@ namespace Fourmiliere
             DessinePlateau();
         }
 
-        private void AddUIToGrid(Grid uneGrille, UIElement unUiElement)
-        {
-
-        }
-
         private void DessinePlateau()
         {
             Plateau.ColumnDefinitions.Clear();
@@ -91,10 +86,20 @@ namespace Fourmiliere
                 }
             }
 
+            // On dessine la fourmilière
+            Uri uri = new Uri("../Assets/images/qg.png", UriKind.Relative);
+            Image img = new Image();
+            img.Source = new BitmapImage(uri);
+
+            Grid.SetColumn(img, App.QuartierGénéral.X);
+            Grid.SetRow(img, App.QuartierGénéral.Y);
+            Plateau.Children.Add(img);
+
+            // On dessine les fourmis
             foreach (var fourmi in App.FourmiliereViewModel.FourmisList)
             {
-                Uri uri = new Uri("../Assets/images/fourmi.png", UriKind.Relative);
-                Image img = new Image();
+                uri = new Uri("../Assets/images/fourmi.png", UriKind.Relative);
+                img = new Image();
                 img.Source = new BitmapImage(uri);
 
                 Grid.SetColumn(img, fourmi.X);
@@ -104,8 +109,8 @@ namespace Fourmiliere
 
             foreach (var nourriture in App.FourmiliereViewModel.NourrituresList)
             {
-                Uri uri = new Uri("../Assets/images/olive.png", UriKind.Relative);
-                Image img = new Image();
+                uri = new Uri("../Assets/images/olive.png", UriKind.Relative);
+                img = new Image();
                 img.Source = new BitmapImage(uri);
 
                 Grid.SetColumn(img, nourriture.X);

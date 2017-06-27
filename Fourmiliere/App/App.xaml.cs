@@ -14,10 +14,12 @@ namespace Fourmiliere
     public partial class App : Application
     {
         public static FourmiliereViewModel FourmiliereViewModel { get; set; }
+        public static QuartierGénéral QuartierGénéral { get; set; }
 
         public App()
         {
             FourmiliereViewModel = new FourmiliereViewModel();
+            QuartierGénéral = new QuartierGénéral(new Random().Next(5));
         }
     }
 }
