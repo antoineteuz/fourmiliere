@@ -14,8 +14,18 @@ namespace Fourmiliere
         public int DimensionY { get; set; }
 
         private string titreApplication;
-        
-        
+
+        private ObservableCollection<Fourmi> fourmisList;
+
+        public ObservableCollection<Fourmi> FourmisList
+        {
+            get { return fourmisList; }
+            set
+            {
+                fourmisList = value;
+                OnPropertyChanged("FourmisList");
+            }
+        }
         public ObservableCollection<Nourriture> nourrituresList;
         private Fourmi fourmiSelect;
         private bool testAjout = true;
@@ -60,18 +70,18 @@ namespace Fourmiliere
             DimensionX = 10;
             DimensionY = 20;
             VitesseExecution = 500;
-            
+            FourmisList = new ObservableCollection<Fourmi>();
             QG = new QuartierGénéral(DimensionX, DimensionY);
         }
 
         public void AjouteFourmi()
         {
-            QG.ProduireFourmi("Fourmi N°" + QG.FourmisList.Count);
+            FourmisList.Add(new Fourmi("Fourmi", DimensionX, DimensionY));
         }
 
         public void AjouteNourriture(int x, int y)
         {
-            foreach (var fourmi in QG.FourmisList)
+            foreach (var fourmi in FourmisList)
             {
                 if (fourmi.X == y && fourmi.Y == x)
                 {
@@ -88,12 +98,12 @@ namespace Fourmiliere
 
         public void SupprimeFourmi()
         {
-            QG.FourmisList.Remove(FourmiSelect);
+            FourmisList.Remove(FourmiSelect);
         }
 
         internal void TourSuivant()
         {
-            foreach (var uneFourmi in QG.FourmisList)
+            foreach (var uneFourmi in FourmisList)
             {
                 uneFourmi.Avance1Tour(DimensionX, DimensionY);
             }
