@@ -32,10 +32,10 @@ namespace Fourmiliere
 
         private static Random Hasard = new Random();
 
-        internal QuartierGénéral(int maxDimensionX, int maxDimensionY)
+        internal QuartierGénéral()
         {
-            X = Hasard.Next(maxDimensionX);
-            Y = Hasard.Next(maxDimensionY);
+            X = Hasard.Next(App.DimensionX);
+            Y = Hasard.Next(App.DimensionY);
 
             FourmisList = new ObservableCollection<Fourmi>();
         }

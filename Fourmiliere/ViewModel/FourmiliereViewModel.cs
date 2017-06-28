@@ -10,11 +10,7 @@ namespace Fourmiliere
     {
         static Random Hazard = new Random();
 
-        public int DimensionX { get; set; }
-        public int DimensionY { get; set; }
-
         private string titreApplication;
-        
         
         public ObservableCollection<Nourriture> nourrituresList;
         private Fourmi fourmiSelect;
@@ -54,14 +50,11 @@ namespace Fourmiliere
         {
             TitreApplication = "Fourmilière";
 
+            VitesseExecution = 500;
 
             NourrituresList = new ObservableCollection<Nourriture>();
-
-            DimensionX = 10;
-            DimensionY = 20;
-            VitesseExecution = 500;
             
-            QG = new QuartierGénéral(DimensionX, DimensionY);
+            QG = new QuartierGénéral();
         }
 
         public void AjouteFourmi()
@@ -73,7 +66,7 @@ namespace Fourmiliere
         {
             foreach (var fourmi in QG.FourmisList)
             {
-                if (fourmi.X == y && fourmi.Y == x)
+                if (fourmi.Position.X == y && fourmi.Position.Y == x)
                 {
                     testAjout = false;
                 } else
@@ -93,9 +86,10 @@ namespace Fourmiliere
 
         internal void TourSuivant()
         {
+            Console.WriteLine("Avance");
             foreach (var uneFourmi in QG.FourmisList)
             {
-                uneFourmi.Avance1Tour(DimensionX, DimensionY);
+                uneFourmi.Avance1Tour(App.DimensionX, App.DimensionY);
             }
         }
 
@@ -107,7 +101,7 @@ namespace Fourmiliere
             EnCours = true;
             while (EnCours)
             {
-                Thread.Sleep(VitesseExecution);
+                Thread.Sleep(App.FourmiliereViewModel.VitesseExecution);
                 TourSuivant();
             }
         }

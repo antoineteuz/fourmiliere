@@ -52,11 +52,11 @@ namespace Fourmiliere
             Plateau.RowDefinitions.Clear();
             Plateau.Children.Clear();
 
-            for (int i = 0; i < App.FourmiliereViewModel.DimensionX; i++)
+            for (int i = 0; i < App.DimensionX; i++)
             {
                 Plateau.ColumnDefinitions.Add(new ColumnDefinition());
             }
-            for (int i = 0; i < App.FourmiliereViewModel.DimensionY; i++)
+            for (int i = 0; i < App.DimensionY; i++)
             {
                 Plateau.RowDefinitions.Add(new RowDefinition());
             }
@@ -71,9 +71,9 @@ namespace Fourmiliere
                 Plateau.Children.Add(pheromone);
             }
 
-            for(int i = 0; i < App.FourmiliereViewModel.DimensionX; i++)
+            for(int i = 0; i < App.DimensionX; i++)
             {
-                for (int j = 0; j < App.FourmiliereViewModel.DimensionY; j++)
+                for (int j = 0; j < App.DimensionY; j++)
                 {
                     Button btn = new Button();
                     btn.Background = new SolidColorBrush(Colors.Aqua);
@@ -102,8 +102,8 @@ namespace Fourmiliere
                 img = new Image();
                 img.Source = new BitmapImage(uri);
 
-                Grid.SetColumn(img, fourmi.X);
-                Grid.SetRow(img, fourmi.Y);
+                Grid.SetColumn(img, fourmi.Position.X);
+                Grid.SetRow(img, fourmi.Position.Y);
                 
                 Plateau.Children.Add(img);
             }

@@ -56,6 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\Nourriture.cs" />
+    <Compile Include="Model\Position.cs" />
     <Compile Include="Model\QartierGénéral.cs" />
     <Compile Include="ViewModel\AProposViewModel.cs" />
     <Compile Include="ViewController\AProposWindow.xaml.cs">

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,7 @@ namespace Fourmiliere.Model
 
         public string Nom { get; set; }
 
-        public int X { get; set;  }
-
-        public int Y { get; set;  }
+        public Position Position { get; set; }
 
         public ObservableCollection<Etape> EtapesList { get; set; }
 
@@ -25,14 +24,12 @@ namespace Fourmiliere.Model
         private int décalageY;
         private int newX;
         private int newY;
-        private int previousX;
-        private int previousY;
 
-        public Fourmi(string Nom, int maxDimX, int maxDimY)
+        public Fourmi(string Nom, int X, int Y)
         {
             this.Nom = Nom;
-            X = maxDimX;
-            Y = maxDimY;
+
+            Position = new Position(X, Y);
 
             EtapesList = new ObservableCollection<Etape>();
 
@@ -49,27 +46,29 @@ namespace Fourmiliere.Model
 
         internal void Avance1Tour(int dimensionX, int dimensionY)
         {
-            AvanceAuHasard(dimensionX, dimensionY);
-            EtapesList.Add(new Etape() { Lieu = X + " " + Y });
+            AvanceAuHasard();
+            EtapesList.Add(new Etape() { Lieu = Position.X + " " + Position.Y });
         }
 
-        private void AvanceAuHasard(int dimensionX, int dimensionY)
+        private void AvanceAuHasard()
         {
-
             do
             {
                 décalageX = Hasard.Next(3) - 1;
                 décalageY = Hasard.Next(3) - 1;
 
-                newX = X + ((décalageX == 2) ? 1 : décalageX);
-                newY = Y + ((décalageY == 2) ? 1 : décalageY);
-            } while (newX == previousX && newY == previousY);
+                newX = Position.X + ((décalageX == 2) ? 1 : décalageX);
+                newY = Position.Y + ((décalageY == 2) ? 1 : décalageY);
+            } while (newX == Position.OldX && newY == Position.OldY);
 
-            previousX = X;
-            previousY = Y;
-
-            if ((newX >= 0) && (newX < dimensionX)) X = newX;
-            if ((newY >= 0) && (newY < dimensionY)) Y = newY;
+            if (Position.Update(newX, newY))
+            {
+                Console.WriteLine(String.Format("Moving to position {0}, {1} !", Position.X.ToString(), Position.Y.ToString()));
+            }
+            else
+            {
+                Console.WriteLine("Same position, not moving...");
+            }
 
         }
     }
