@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Fourmiliere.Observer;
+using Fourmiliere.Observer.Events;
+using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fourmiliere.Model
 {
-
-    public class Fourmi
+    public class Fourmi : AbstractObserver
     {
-
-        static Random Hasard = new Random();
+        private static Random Hasard = new Random();
 
         public string Nom { get; set; }
 
-        public int X { get; set;  }
+        public int X { get; set; }
 
-        public int Y { get; set;  }
+        public int Y { get; set; }
 
         public ObservableCollection<Etape> EtapesList { get; set; }
 
@@ -28,11 +24,11 @@ namespace Fourmiliere.Model
         private int previousX;
         private int previousY;
 
-        public Fourmi(string Nom, int maxDimX, int maxDimY)
+        public Fourmi(string Nom)
         {
             this.Nom = Nom;
-            X = maxDimX;
-            Y = maxDimY;
+            X = QuartierGénéral.get().X;
+            Y = QuartierGénéral.get().Y;
 
             EtapesList = new ObservableCollection<Etape>();
 
@@ -47,15 +43,14 @@ namespace Fourmiliere.Model
             return "(Brouillon)" + Nom;
         }
 
-        internal void Avance1Tour(int dimensionX, int dimensionY)
+        public void Avance1Tour()
         {
-            AvanceAuHasard(dimensionX, dimensionY);
-            EtapesList.Add(new Etape() { Lieu = X + " " + Y });
+            AvanceAuHasard();
+            EtapesList.Add(new Etape() {Lieu = X + " " + Y});
         }
 
-        private void AvanceAuHasard(int dimensionX, int dimensionY)
+        private void AvanceAuHasard()
         {
-
             do
             {
                 décalageX = Hasard.Next(3) - 1;
@@ -68,9 +63,13 @@ namespace Fourmiliere.Model
             previousX = X;
             previousY = Y;
 
-            if ((newX >= 0) && (newX < dimensionX)) X = newX;
-            if ((newY >= 0) && (newY < dimensionY)) Y = newY;
+            if ((newX >= 0) && (newX < App.DimensionX)) X = newX;
+            if ((newY >= 0) && (newY < App.DimensionY)) Y = newY;
+        }
 
+        public override void Update()
+        {
+            Avance1Tour();
         }
     }
 }

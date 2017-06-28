@@ -1,7 +1,9 @@
 ﻿using Fourmiliere.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
+using Fourmiliere.Observer.Events;
 
 namespace Fourmiliere
 {
@@ -14,6 +16,8 @@ namespace Fourmiliere
         public int DimensionY { get; set; }
 
         private string titreApplication;
+
+        private NewLoopEvent newLoopEvent;
 
         private ObservableCollection<Fourmi> fourmisList;
 
@@ -28,6 +32,7 @@ namespace Fourmiliere
         }
         public ObservableCollection<Nourriture> nourrituresList;
         private Fourmi fourmiSelect;
+        private Fourmi fourmiTmp;
         private bool testAjout = true;
 
         public QuartierGénéral QG { get; set; }
@@ -64,19 +69,21 @@ namespace Fourmiliere
         {
             TitreApplication = "Fourmilière";
 
-
+            newLoopEvent = new NewLoopEvent();
             NourrituresList = new ObservableCollection<Nourriture>();
 
-            DimensionX = 10;
-            DimensionY = 20;
-            VitesseExecution = 500;
+            DimensionX = App.DimensionX;
+            DimensionY = App.DimensionY;
+            VitesseExecution = 1;
             FourmisList = new ObservableCollection<Fourmi>();
-            QG = new QuartierGénéral(DimensionX, DimensionY);
+            QG = QuartierGénéral.get();
         }
 
         public void AjouteFourmi()
         {
-            FourmisList.Add(new Fourmi("Fourmi", DimensionX, DimensionY));
+            fourmiTmp = new Fourmi("Fourmi");
+            newLoopEvent.Attach(fourmiTmp);
+            FourmisList.Add(fourmiTmp);
         }
 
         public void AjouteNourriture(int x, int y)
@@ -98,15 +105,17 @@ namespace Fourmiliere
 
         public void SupprimeFourmi()
         {
+            newLoopEvent.Detach(FourmiSelect);
             FourmisList.Remove(FourmiSelect);
         }
 
         internal void TourSuivant()
         {
-            foreach (var uneFourmi in FourmisList)
-            {
-                uneFourmi.Avance1Tour(DimensionX, DimensionY);
-            }
+            newLoopEvent.Notify();
+//            foreach (var uneFourmi in FourmisList)
+//            {
+//                uneFourmi.Avance1Tour();
+//            }
         }
 
         public bool EnCours { get; set; }
