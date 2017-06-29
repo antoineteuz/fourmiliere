@@ -21,7 +21,9 @@ namespace Fourmiliere.Models
 
         private int quantitéNourriture = 0;
 
-        public int QuantitéNourriture { get; }
+        public int QuantitéNourriture {
+            get { return quantitéNourriture;  }
+        }
 
         private static Random Hasard = new Random();
 
@@ -47,7 +49,9 @@ namespace Fourmiliere.Models
 
         public void AjoutNourriture(Nourriture nourriture)
         {
+            nourriture = null;
             quantitéNourriture++;
+            OnPropertyChanged("QuantitéNourriture");
         }
 
     }
