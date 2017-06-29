@@ -154,16 +154,16 @@ namespace Fourmiliere.Views
                 Image img = new Image();
                 img.Source = new BitmapImage(uri);
 
-                Grid.SetColumn(img, nourriture.Y);
-                Grid.SetRow(img, nourriture.X);
+                Grid.SetColumn(img, nourriture.X);
+                Grid.SetRow(img, nourriture.Y);
                 Plateau.Children.Add(img);
             }
         }
 
         private void BtnOnClick(object sender, RoutedEventArgs e)
         {
+            int column = Grid.GetColumn((Button)sender);
             int row = Grid.GetRow((Button) sender);
-            int column = Grid.GetColumn((Button) sender);
 
             App.FourmiliereViewModel.AjouteNourriture(column, row);
             Redessine();

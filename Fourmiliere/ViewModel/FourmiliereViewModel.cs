@@ -83,21 +83,10 @@ namespace Fourmiliere.ViewModel
             FourmisList.Add(fourmiTmp);
         }
 
-        public void AjouteNourriture(int x, int y)
+        public void AjouteNourriture(int column, int row)
         {
-            foreach (var fourmi in FourmisList)
-            {
-                if (fourmi.X == y && fourmi.Y == x)
-                {
-                    testAjout = false;
-                } else
-                {
-                    testAjout = testAjout && true;
-                }
-            }
-
-            if (testAjout)
-                NourrituresList.Add(new Nourriture(x, y)); 
+            Console.WriteLine("Column {0}, Row {1}", column, row); 
+            NourrituresList.Add(new Nourriture(column, row)); 
         }
 
         public void SupprimeFourmi()

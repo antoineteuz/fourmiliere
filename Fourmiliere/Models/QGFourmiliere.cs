@@ -45,7 +45,7 @@ namespace Fourmiliere.Models
             return instance;
         }
 
-        private void AjoutNourriture(int quantité)
+        public void AjoutNourriture(Nourriture nourriture)
         {
             quantitéNourriture++;
         }
