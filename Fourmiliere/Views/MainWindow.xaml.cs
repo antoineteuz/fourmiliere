@@ -165,7 +165,7 @@ namespace Fourmiliere.Views
             int row = Grid.GetRow((Button) sender);
             int column = Grid.GetColumn((Button) sender);
 
-            App.FourmiliereViewModel.AjouteNourriture(row, column);
+            App.FourmiliereViewModel.AjouteNourriture(column, row);
             Redessine();
         }
 
