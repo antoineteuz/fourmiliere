@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fourmiliere.Model
+namespace Fourmiliere.Models
 {
     public class Nourriture
     {
@@ -12,11 +12,11 @@ namespace Fourmiliere.Model
 
         public int quantite { get; set; }
 
-        public Nourriture (int mX, int mY)
+        public Nourriture (int x, int y)
         {
             quantite = Hazard.Next(10);
-            X = mX;
-            Y = mY;
+            X = x;
+            Y = y;
         }
     }
 }

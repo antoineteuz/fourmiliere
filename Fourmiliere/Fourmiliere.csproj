@@ -50,37 +50,37 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App\App.xaml">
+    <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Observer\Events\NewLoopEvent.cs" />
-    <Compile Include="Model\ModelBase.cs" />
-    <Compile Include="Model\Nourriture.cs" />
-    <Compile Include="Model\QuartierGénéral.cs" />
+    <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\Nourriture.cs" />
+    <Compile Include="Models\QGFourmiliere.cs" />
     <Compile Include="Observer\AbstractObserver.cs" />
     <Compile Include="Observer\AbstractSubject.cs" />
     <Compile Include="ViewModel\AProposViewModel.cs" />
-    <Compile Include="ViewController\AProposWindow.xaml.cs">
+    <Compile Include="Views\AProposWindow.xaml.cs">
       <DependentUpon>AProposWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Etape.cs" />
+    <Compile Include="Models\Etape.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Page Include="ViewController\AProposWindow.xaml">
+    <Page Include="Views\AProposWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewController\MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App\App.xaml.cs">
+    <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\Fourmi.cs" />
+    <Compile Include="Models\Fourmi.cs" />
     <Compile Include="ViewModel\FourmiliereViewModel.cs" />
-    <Compile Include="ViewController\MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -109,7 +109,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App\App.config" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\images\fourmi.png" />

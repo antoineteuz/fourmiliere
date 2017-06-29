@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fourmiliere
+namespace Fourmiliere.ViewModel
 {
     public class AProposViewModel: ViewModelBase
     {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Fourmiliere.Models;
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows;
@@ -9,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Fourmiliere
+namespace Fourmiliere.Views
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
@@ -19,17 +21,21 @@ namespace Fourmiliere
         DispatcherTimer dt = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
 
+        private QGFourmiliere QG { get; }
+
         public MainWindow()
         {
             InitializeComponent();
-            
+
             DataContext = App.FourmiliereViewModel;
+
+            QG = QGFourmiliere.Get();
 
             //Rafraichissement du plateau
             dt.Tick += new EventHandler(Redessine_Tick);
             dt.Interval = new TimeSpan(0, 0, 0, 0, App.FourmiliereViewModel.VitesseExecution);
 
-            Redessine();
+            DessinePlateau();
         }
 
         private void Redessine_Tick(object sender, EventArgs e)
@@ -48,10 +54,30 @@ namespace Fourmiliere
 
         private void DessinePlateau()
         {
+            ViderPlateau();
+
+            InitPlateau();
+
+            DessinePheromone(0, 0);
+
+            DessineCellules();
+
+            DessineFourmiliere();
+
+            DessineFourmis();
+
+            DessineNourriture();
+        }
+
+        private void ViderPlateau()
+        {
             Plateau.ColumnDefinitions.Clear();
             Plateau.RowDefinitions.Clear();
             Plateau.Children.Clear();
+        }
 
+        private void InitPlateau()
+        {
             for (int i = 0; i < App.DimensionX; i++)
             {
                 Plateau.ColumnDefinitions.Add(new ColumnDefinition());
@@ -60,18 +86,21 @@ namespace Fourmiliere
             {
                 Plateau.RowDefinitions.Add(new RowDefinition());
             }
+        }
 
-            for (int i = 0; i < 7; i++)
-            {
-                Ellipse pheromone = new Ellipse();
-                pheromone.Fill = new SolidColorBrush(Colors.BlueViolet);
+        private void DessinePheromone(int x, int y)
+        {
+            Ellipse pheromone = new Ellipse();
+            pheromone.Fill = new SolidColorBrush(Colors.BlueViolet);
 
-                Grid.SetColumn(pheromone, 4);
-                Grid.SetRow(pheromone, 4);
-                Plateau.Children.Add(pheromone);
-            }
+            Grid.SetColumn(pheromone, 4);
+            Grid.SetRow(pheromone, 4);
+            Plateau.Children.Add(pheromone);
+        }
 
-            for(int i = 0; i < App.DimensionX; i++)
+        private void DessineCellules()
+        {
+            for (int i = 0; i < App.DimensionX; i++)
             {
                 for (int j = 0; j < App.DimensionY; j++)
                 {
@@ -85,49 +114,58 @@ namespace Fourmiliere
                     btn.Margin = new Thickness(4);
                 }
             }
+        }
 
-            // On dessine la fourmilière
-            Uri uri = new Uri("../Assets/images/qg.png", UriKind.Relative);
-            Image img = new Image();
-            img.Source = new BitmapImage(uri);
+        private void DessineFourmiliere()
+        {
+            Grid.SetColumn(QG.image, QG.X);
+            Grid.SetRow(QG.image, QG.Y);
+            Plateau.Children.Add(QG.image);
+        }
 
-            Grid.SetColumn(img, App.FourmiliereViewModel.QG.X);
-            Grid.SetRow(img, App.FourmiliereViewModel.QG.Y);
-            Plateau.Children.Add(img);
-
+        public void DessineFourmis()
+        {
             // On dessine les fourmis
             foreach (var fourmi in App.FourmiliereViewModel.FourmisList)
             {
-                uri = new Uri("../Assets/images/fourmi.png", UriKind.Relative);
-                img = new Image();
-                img.Source = new BitmapImage(uri);
+                Grid.SetColumn(fourmi.image, fourmi.X);
+                Grid.SetRow(fourmi.image, fourmi.Y);
 
-                Grid.SetColumn(img, fourmi.Position.X);
-                Grid.SetRow(img, fourmi.Position.Y);
+                fourmi.GridIndex = Plateau.Children.Add(fourmi.image);
                 
-                Plateau.Children.Add(img);
             }
+        }
 
+        public void RedessineFourmi(Fourmi fourmi)
+        {
+            Plateau.Children.RemoveAt(fourmi.GridIndex);
+
+            Grid.SetColumn(fourmi.image, fourmi.X);
+            Grid.SetRow(fourmi.image, fourmi.Y);
+
+            fourmi.GridIndex = Plateau.Children.Add(fourmi.image);
+        }
+
+        private void DessineNourriture()
+        {
             foreach (var nourriture in App.FourmiliereViewModel.NourrituresList)
             {
-                uri = new Uri("../Assets/images/olive.png", UriKind.Relative);
-                img = new Image();
+                Uri uri = new Uri("../Assets/images/olive.png", UriKind.Relative);
+                Image img = new Image();
                 img.Source = new BitmapImage(uri);
 
-                Grid.SetColumn(img, nourriture.Y);
-                Grid.SetRow(img, nourriture.X);
+                Grid.SetColumn(img, nourriture.X);
+                Grid.SetRow(img, nourriture.Y);
                 Plateau.Children.Add(img);
             }
-            
-
         }
 
         private void BtnOnClick(object sender, RoutedEventArgs e)
         {
+            int column = Grid.GetColumn((Button)sender);
             int row = Grid.GetRow((Button) sender);
-            int column = Grid.GetColumn((Button) sender);
 
-            App.FourmiliereViewModel.AjouteNourriture(row, column);
+            App.FourmiliereViewModel.AjouteNourriture(column, row);
             Redessine();
         }
 
@@ -144,7 +182,7 @@ namespace Fourmiliere
 
         private void ListBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Delete)
+            if (e.Key == Key.Delete)
             {
                 App.FourmiliereViewModel.SupprimeFourmi();
             }
