@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fourmiliere.Model
+namespace Fourmiliere.Models
 {
     public class Nourriture
     {

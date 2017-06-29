@@ -1,0 +1,131 @@
+﻿<Window x:Class="Fourmiliere.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Fourmiliere.Views"
+        mc:Ignorable="d"
+        Title="{Binding TitreApplication}" Width="1600" Height="900">
+
+    <Grid ShowGridLines="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        
+        <Menu IsMainMenu="True"
+              Grid.Row="0" Grid.ColumnSpan="3">
+            <MenuItem Header="_About" Click="About_Click" />
+        </Menu>
+        
+        
+        <TextBlock Grid.Row="1" Grid.Column="1"
+                   Text="{Binding TitreApplication}" FontSize="20"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="2"
+                   Text="{Binding FourmisList.Count, StringFormat='Il ya {0} Fourmis'}"
+                   HorizontalAlignment="Center"/>
+        <ListBox Grid.Row="2" Grid.Column="0" 
+                 ItemsSource="{Binding FourmisList}"
+                 Background="{x:Null}"
+                 HorizontalContentAlignment="Stretch"
+                 SelectedItem="{Binding FourmiSelect}" KeyDown="ListBox_KeyDown">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="../Assets/images/fourmi.png" Width="30" />
+                        <TextBlock Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Nom}"/>
+                        <TextBlock Grid.Column="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding EtapesList.Count, StringFormat='Etape n°{0}'}" />
+                        <TextBlock Grid.Row="1" Grid.Column="2"
+                               FontSize="22"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                        Text="{Binding FourmiSelect.Nom}" />
+                    </Grid>
+                    
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Image Grid.Row="3" Grid.Column="2" Grid.RowSpan="2"
+               Source="../Assets/images/fourmi.png"/>
+        <Button Name="AjouteFourmi"
+                Grid.Row="3" Grid.Column="0"
+                Content="Ajouter Fourmi" FontSize="16"
+                Click="AjouteFourmi_Click"
+                ClipToBounds="True"/>
+
+        <Button Name="SupprimerFourmi"
+                Grid.Row="4" Grid.Column="0"
+                FontSize="16" Click="SupprimerFourmi_Click">
+            <Button.Content>
+                <TextBlock Text="{Binding FourmiSelect.Nom, StringFormat='Supprimer {0}'}" />
+            </Button.Content>
+        </Button>
+
+        <TextBlock Grid.Row="2" Grid.Column="2"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="22"
+                   Text="{Binding FourmiSelect.Nom}" />
+
+        <Grid Name="Plateau"
+              Grid.Row="2" Grid.Column="1"
+              ShowGridLines="True">
+        </Grid>
+
+        <Grid Grid.Row="4" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="BtnTourSuivant" Grid.Row="0" Grid.Column="0"
+                    Content="Tour suivant" FontSize="16" Click="BtnTourSuivant_Click" />
+
+            <Button x:Name="BtnAvance" Grid.Row="0" Grid.Column="1"
+                    Content="Avance" FontSize="16" Click="BtnAvance_Click"  />
+
+            <Button x:Name="BtnStop" Grid.Row="0" Grid.Column="3"
+                    Content="Stop !" FontSize="16" Click="BtnStop_Click"  />
+
+            <Slider Grid.Column="2" Minimum="1" Maximum="1000" Value="{Binding VitesseExecution}"></Slider>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock FontSize="22" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FourmiSelect.Nom}" />
+
+            <TextBlock FontSize="22" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FourmiSelect.EtapesList.Count, StringFormat='Nombre d étapes : {0}'}"/>
+
+        </Grid>
+    </Grid>
+</Window>

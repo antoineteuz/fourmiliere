@@ -1,9 +1,10 @@
-﻿using Fourmiliere.Model;
+﻿using Fourmiliere.Models;
+using Fourmiliere.Observer.Events;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
 
-namespace Fourmiliere
+namespace Fourmiliere.ViewModel
 {
 
     public class FourmiliereViewModel : ViewModelBase
@@ -16,7 +17,7 @@ namespace Fourmiliere
         private Fourmi fourmiSelect;
         private bool testAjout = true;
 
-        public QuartierGénéral QG { get; set; }
+        public QuartierGeneral QG { get; set; }
 
         public string TitreApplication {
             get { return titreApplication; }
@@ -27,7 +28,7 @@ namespace Fourmiliere
             }
         }
 
-        public ObservableCollection<Model.Nourriture> NourrituresList
+        public ObservableCollection<Nourriture> NourrituresList
         {
             get { return nourrituresList; }
             set
@@ -52,9 +53,20 @@ namespace Fourmiliere
 
             VitesseExecution = 500;
 
+<<<<<<< Updated upstream
             NourrituresList = new ObservableCollection<Nourriture>();
             
-            QG = new QuartierGénéral();
+            QG = new QuartierGeneral();
+=======
+            DimensionX = App.DimensionX;
+            DimensionY = App.DimensionY;
+            VitesseExecution = 1;
+            FourmisList = new ObservableCollection<Fourmi>();
+            QG = QuartierGeneral.Get();
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         }
 
         public void AjouteFourmi()
@@ -86,11 +98,18 @@ namespace Fourmiliere
 
         internal void TourSuivant()
         {
+<<<<<<< Updated upstream
             Console.WriteLine("Avance");
             foreach (var uneFourmi in QG.FourmisList)
             {
                 uneFourmi.Avance1Tour(App.DimensionX, App.DimensionY);
             }
+=======
+            newLoopEvent.Notify();
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         }
 
         public bool EnCours { get; set; }

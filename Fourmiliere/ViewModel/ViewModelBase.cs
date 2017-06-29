@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Fourmiliere
+namespace Fourmiliere.ViewModel
 {
 
     public class ViewModelBase : INotifyPropertyChanged
@@ -9,10 +9,7 @@ namespace Fourmiliere
 
         protected void OnPropertyChanged(string info)
         {
-            if(PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
     }
 }

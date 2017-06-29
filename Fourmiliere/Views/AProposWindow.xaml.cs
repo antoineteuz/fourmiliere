@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using Fourmiliere.ViewModel;
+using System.Windows;
 
-namespace Fourmiliere
+namespace Fourmiliere.Views
 {
     /// <summary>
     /// Logique d'interaction pour AProposWindow.xaml
