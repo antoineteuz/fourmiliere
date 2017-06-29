@@ -1,26 +1,39 @@
-﻿using Fourmiliere.Model;
+﻿using Fourmiliere.Models;
+using Fourmiliere.Observer.Events;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
 
-namespace Fourmiliere
+namespace Fourmiliere.ViewModel
 {
 
     public class FourmiliereViewModel : ViewModelBase
     {
         static Random Hazard = new Random();
 
-        public int DimensionX { get; set; }
-        public int DimensionY { get; set; }
-
         private string titreApplication;
-        
-        
+
+
+        private NewLoopEvent newLoopEvent;
+
+        private ObservableCollection<Fourmi> fourmisList;
+
+        public ObservableCollection<Fourmi> FourmisList
+        {
+            get { return fourmisList; }
+            set
+            {
+                fourmisList = value;
+                OnPropertyChanged("FourmisList");
+            }
+        }
+
         public ObservableCollection<Nourriture> nourrituresList;
         private Fourmi fourmiSelect;
+        private Fourmi fourmiTmp;
         private bool testAjout = true;
 
-        public QuartierGénéral QG { get; set; }
+        public QGFourmiliere QG { get; set; }
 
         public string TitreApplication {
             get { return titreApplication; }
@@ -31,7 +44,7 @@ namespace Fourmiliere
             }
         }
 
-        public ObservableCollection<Model.Nourriture> NourrituresList
+        public ObservableCollection<Nourriture> NourrituresList
         {
             get { return nourrituresList; }
             set
@@ -54,49 +67,37 @@ namespace Fourmiliere
         {
             TitreApplication = "Fourmilière";
 
-
-            NourrituresList = new ObservableCollection<Nourriture>();
-
-            DimensionX = 10;
-            DimensionY = 20;
             VitesseExecution = 500;
             
-            QG = new QuartierGénéral(DimensionX, DimensionY);
+            newLoopEvent = new NewLoopEvent();
+            NourrituresList = new ObservableCollection<Nourriture>();
+            FourmisList = new ObservableCollection<Fourmi>();
+
+            QG = QGFourmiliere.Get();
         }
 
         public void AjouteFourmi()
         {
-            QG.ProduireFourmi("Fourmi N°" + QG.FourmisList.Count);
+            fourmiTmp = new Fourmi("Fourmi");
+            newLoopEvent.Attach(fourmiTmp);
+            FourmisList.Add(fourmiTmp);
         }
 
-        public void AjouteNourriture(int x, int y)
+        public void AjouteNourriture(int column, int row)
         {
-            foreach (var fourmi in QG.FourmisList)
-            {
-                if (fourmi.X == y && fourmi.Y == x)
-                {
-                    testAjout = false;
-                } else
-                {
-                    testAjout = testAjout && true;
-                }
-            }
-
-            if (testAjout)
-                NourrituresList.Add(new Nourriture(x, y)); 
+            Console.WriteLine("Column {0}, Row {1}", column, row); 
+            NourrituresList.Add(new Nourriture(column, row)); 
         }
 
         public void SupprimeFourmi()
         {
-            QG.FourmisList.Remove(FourmiSelect);
+            newLoopEvent.Detach(FourmiSelect);
+            FourmisList.Remove(FourmiSelect);
         }
 
         internal void TourSuivant()
         {
-            foreach (var uneFourmi in QG.FourmisList)
-            {
-                uneFourmi.Avance1Tour(DimensionX, DimensionY);
-            }
+            newLoopEvent.Notify();
         }
 
         public bool EnCours { get; set; }
@@ -107,7 +108,7 @@ namespace Fourmiliere
             EnCours = true;
             while (EnCours)
             {
-                Thread.Sleep(VitesseExecution);
+                Thread.Sleep(App.FourmiliereViewModel.VitesseExecution);
                 TourSuivant();
             }
         }
