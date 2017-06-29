@@ -57,7 +57,7 @@
     <Compile Include="Observer\Events\NewLoopEvent.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Nourriture.cs" />
-    <Compile Include="Models\QuartierGénéral.cs" />
+    <Compile Include="Models\QuartierGeneral.cs" />
     <Compile Include="Observer\AbstractObserver.cs" />
     <Compile Include="Observer\AbstractSubject.cs" />
     <Compile Include="ViewModel\AProposViewModel.cs" />

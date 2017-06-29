@@ -47,10 +47,8 @@ namespace Fourmiliere.Models
 
             EtapesList = new ObservableCollection<Etape>();
 
-            for (int i = 0, max = Hasard.Next(10); i < max; i++)
-            {
-                EtapesList.Add(new Etape());
-            }
+            EtapesList.Add(new Etape());
+            
         }
 
         public override string ToString()

@@ -12,9 +12,25 @@ namespace Fourmiliere.ViewModel
         static Random Hazard = new Random();
 
         private string titreApplication;
-        
+
+
+        private NewLoopEvent newLoopEvent;
+
+        private ObservableCollection<Fourmi> fourmisList;
+
+        public ObservableCollection<Fourmi> FourmisList
+        {
+            get { return fourmisList; }
+            set
+            {
+                fourmisList = value;
+                OnPropertyChanged("FourmisList");
+            }
+        }
+
         public ObservableCollection<Nourriture> nourrituresList;
         private Fourmi fourmiSelect;
+        private Fourmi fourmiTmp;
         private bool testAjout = true;
 
         public QuartierGeneral QG { get; set; }
@@ -52,37 +68,26 @@ namespace Fourmiliere.ViewModel
             TitreApplication = "Fourmilière";
 
             VitesseExecution = 500;
-
-<<<<<<< Updated upstream
-            NourrituresList = new ObservableCollection<Nourriture>();
             
-            QG = new QuartierGeneral();
-=======
-            DimensionX = App.DimensionX;
-            DimensionY = App.DimensionY;
-            VitesseExecution = 1;
+            newLoopEvent = new NewLoopEvent();
+            NourrituresList = new ObservableCollection<Nourriture>();
             FourmisList = new ObservableCollection<Fourmi>();
-<<<<<<< Updated upstream
+
             QG = QuartierGeneral.Get();
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
-            QG = QuartierGénéral.Get();
->>>>>>> Stashed changes
         }
 
         public void AjouteFourmi()
         {
-            QG.ProduireFourmi("Fourmi N°" + QG.FourmisList.Count);
+            fourmiTmp = new Fourmi("Fourmi");
+            newLoopEvent.Attach(fourmiTmp);
+            FourmisList.Add(fourmiTmp);
         }
 
         public void AjouteNourriture(int x, int y)
         {
-            foreach (var fourmi in QG.FourmisList)
+            foreach (var fourmi in FourmisList)
             {
-                if (fourmi.Position.X == y && fourmi.Position.Y == x)
+                if (fourmi.X == y && fourmi.Y == x)
                 {
                     testAjout = false;
                 } else
@@ -97,26 +102,13 @@ namespace Fourmiliere.ViewModel
 
         public void SupprimeFourmi()
         {
-            QG.FourmisList.Remove(FourmiSelect);
+            newLoopEvent.Detach(FourmiSelect);
+            FourmisList.Remove(FourmiSelect);
         }
 
         internal void TourSuivant()
         {
-<<<<<<< Updated upstream
-            Console.WriteLine("Avance");
-            foreach (var uneFourmi in QG.FourmisList)
-            {
-                uneFourmi.Avance1Tour(App.DimensionX, App.DimensionY);
-            }
-=======
             newLoopEvent.Notify();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         }
 
         public bool EnCours { get; set; }

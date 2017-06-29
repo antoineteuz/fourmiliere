@@ -100,9 +100,9 @@ namespace Fourmiliere.Views
 
         private void DessineCellules()
         {
-            for (int i = 0; i < App.FourmiliereViewModel.DimensionX; i++)
+            for (int i = 0; i < App.DimensionX; i++)
             {
-                for (int j = 0; j < App.FourmiliereViewModel.DimensionY; j++)
+                for (int j = 0; j < App.DimensionY; j++)
                 {
                     Button btn = new Button();
                     btn.Background = new SolidColorBrush(Colors.Aqua);

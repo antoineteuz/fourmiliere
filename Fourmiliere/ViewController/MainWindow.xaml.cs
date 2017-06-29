@@ -96,7 +96,7 @@ namespace Fourmiliere
             Plateau.Children.Add(img);
 
             // On dessine les fourmis
-            foreach (var fourmi in App.FourmiliereViewModel.QG.FourmisList)
+            foreach (var fourmi in App.FourmiliereViewModel.FourmisList)
             {
                 uri = new Uri("../Assets/images/fourmi.png", UriKind.Relative);
                 img = new Image();
