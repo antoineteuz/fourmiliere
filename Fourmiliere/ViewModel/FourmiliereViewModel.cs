@@ -62,10 +62,14 @@ namespace Fourmiliere.ViewModel
             DimensionY = App.DimensionY;
             VitesseExecution = 1;
             FourmisList = new ObservableCollection<Fourmi>();
+<<<<<<< Updated upstream
             QG = QuartierGeneral.Get();
 <<<<<<< Updated upstream
 >>>>>>> Stashed changes
 =======
+>>>>>>> Stashed changes
+=======
+            QG = QuartierGénéral.Get();
 >>>>>>> Stashed changes
         }
 
@@ -107,6 +111,9 @@ namespace Fourmiliere.ViewModel
 =======
             newLoopEvent.Notify();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
