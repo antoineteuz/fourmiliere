@@ -4,10 +4,10 @@ using System.Windows.Media.Imaging;
 
 namespace Fourmiliere.Models
 {
-    public class QuartierGeneral: ModelBase
+    public class QGFourmiliere: ModelBase
     {
 
-        private static QuartierGeneral instance;
+        private static QGFourmiliere instance;
 
         public Uri imageUri;
 
@@ -25,7 +25,7 @@ namespace Fourmiliere.Models
 
         private static Random Hasard = new Random();
 
-        protected QuartierGeneral()
+        protected QGFourmiliere()
         {
 
             imageUri = new Uri("../Assets/images/qg.png", UriKind.Relative);
@@ -36,11 +36,11 @@ namespace Fourmiliere.Models
             Y = Hasard.Next(App.DimensionY);
         }
 
-        public static QuartierGeneral Get()
+        public static QGFourmiliere Get()
         {
             if (instance == null)
             {
-                instance = new QuartierGeneral();
+                instance = new QGFourmiliere();
             }
             return instance;
         }

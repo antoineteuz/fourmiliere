@@ -33,7 +33,7 @@ namespace Fourmiliere.ViewModel
         private Fourmi fourmiTmp;
         private bool testAjout = true;
 
-        public QuartierGeneral QG { get; set; }
+        public QGFourmiliere QG { get; set; }
 
         public string TitreApplication {
             get { return titreApplication; }
@@ -73,7 +73,7 @@ namespace Fourmiliere.ViewModel
             NourrituresList = new ObservableCollection<Nourriture>();
             FourmisList = new ObservableCollection<Fourmi>();
 
-            QG = QuartierGeneral.Get();
+            QG = QGFourmiliere.Get();
         }
 
         public void AjouteFourmi()

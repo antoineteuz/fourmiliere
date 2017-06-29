@@ -42,8 +42,8 @@ namespace Fourmiliere.Models
             imageUri = new Uri("../Assets/images/fourmi.png", UriKind.Relative);
             image.Source = new BitmapImage(imageUri);
 
-            X = QuartierGeneral.Get().X;
-            Y = QuartierGeneral.Get().Y;
+            X = QGFourmiliere.Get().X;
+            Y = QGFourmiliere.Get().Y;
 
             EtapesList = new ObservableCollection<Etape>();
 

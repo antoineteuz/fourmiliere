@@ -21,7 +21,7 @@ namespace Fourmiliere.Views
         DispatcherTimer dt = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
 
-        private QuartierGeneral QG { get; }
+        private QGFourmiliere QG { get; }
 
         public MainWindow()
         {
@@ -29,7 +29,7 @@ namespace Fourmiliere.Views
 
             DataContext = App.FourmiliereViewModel;
 
-            QG = QuartierGeneral.Get();
+            QG = QGFourmiliere.Get();
 
             //Rafraichissement du plateau
             dt.Tick += new EventHandler(Redessine_Tick);
